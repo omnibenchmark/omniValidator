@@ -1,0 +1,206 @@
+{
+    "title": "Metric info schema - omni_batch",
+    "description": "Schema validator for metric info files produced by metrics modules.",
+    "default": {},
+    "examples": [
+        {
+            "min": [
+                "0"
+            ],
+            "flip": [
+                "TRUE"
+            ],
+            "max": [
+                "1"
+            ],
+            "group": [
+                "mixing"
+            ],
+            "name": [
+                "cms"
+            ],
+            "input": [
+                "corrected_dim_file"
+            ]
+        }
+    ],
+    "required": [
+        "min",
+        "flip",
+        "max",
+        "group",
+        "name",
+        "input"
+    ],
+    "properties": {
+        "min": {
+            "$id": "#/properties/min",
+            "default": [],
+            "description": "Minimum possible value of this metric.",
+            "examples": [
+                [
+                    "0"
+                ]
+            ],
+            "title": "The min schema",
+            "type": "array",
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/min/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/min/items/anyOf/0",
+                        "type": "string",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "0"
+                        ]
+                    }
+                ]
+            }
+        },
+        "flip": {
+            "$id": "#/properties/flip",
+            "default": [],
+            "description": "Should the value be flipped when compared to other measures?",
+            "examples": [
+                [
+                    "TRUE"
+                ]
+            ],
+            "title": "The flip schema",
+            "type": "array",
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/flip/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/flip/items/anyOf/0",
+                        "type": "string",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "TRUE"
+                        ]
+                    }
+                ]
+            }
+        },
+        "max": {
+            "$id": "#/properties/max",
+            "default": [],
+            "description": "Maximum possible value of the metric.",
+            "examples": [
+                [
+                    "1"
+                ]
+            ],
+            "title": "The max schema",
+            "type": "array",
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/max/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/max/items/anyOf/0",
+                        "type": "string",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "1"
+                        ]
+                    }
+                ]
+            }
+        },
+        "group": {
+            "$id": "#/properties/group",
+            "type": "array",
+            "title": "The group schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "examples": [
+                [
+                    "mixing"
+                ]
+            ],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/group/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/group/items/anyOf/0",
+                        "type": "string",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "mixing"
+                        ]
+                    }
+                ]
+            }
+        },
+        "name": {
+            "$id": "#/properties/name",
+            "default": [],
+            "description": "Name of the metric. Will be displayed on the dashboard.",
+            "examples": [
+                [
+                    "cms"
+                ]
+            ],
+            "title": "The name schema",
+            "type": "array",
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/name/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/name/items/anyOf/0",
+                        "type": "string",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "cms"
+                        ]
+                    }
+                ]
+            }
+        },
+        "input": {
+            "$id": "#/properties/input",
+            "default": [],
+            "description": "Type of input required by the metric.",
+            "examples": [
+                [
+                    "corrected_dim_file"
+                ]
+            ],
+            "title": "The input schema",
+            "type": "array",
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/input/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/input/items/anyOf/0",
+                        "type": "string",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "corrected_dim_file"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "additionalProperties": true
+}
