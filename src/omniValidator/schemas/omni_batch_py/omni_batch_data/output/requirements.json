@@ -1,0 +1,32 @@
+{
+    "Description": "A description of the required file outputs for the 'data' modules of omni-batch. In addition to the presence of the required files, omniValidator will also check some fields described below (e.g. file extension, 'end' field).",
+    "fields": {
+        "description": "a description of the required file", 
+        "end": "File extension for this file type", 
+        "fields": "Required fields/ attributes of the outputs."
+
+    },
+    "required": {
+        "counts": {
+            "description": "Count matrix in compressed format.", 
+            "end": "mtx.gz",
+            "fields": "genes(rows) x cells(columns)", 
+            "example": "https://renkulab.io/projects/omnibenchmark/omni-batch-py/cellbench-py/files/blob/data/cellbench_data_py"},
+        "meta": {
+            "description": "Column (cell) meta information associated to the count data.", 
+            "end": "json",
+            "fields": ["batch_id", "cell_id", "cluster_id"], 
+            "example": "https://renkulab.io/projects/omnibenchmark/omni-batch-py/cellbench-py/files/blob/data/cellbench_data_py"},
+        "data_info": {
+            "description": "General information about the data. Additional fields can be added on top of required ones.", 
+            "end": "json",
+            "fields": ["link", "tissue", "sequencing_protocol", "n_cells", "n_genes", "n_batches", "description"], 
+            "example": "https://renkulab.io/projects/omnibenchmark/omni-batch-py/cellbench-py/files/blob/data/cellbench_data_py"},
+        "feature": {
+            "description": "Rows (features/ genes) information, associated to the count data.", 
+            "end": "json",
+            "fields": "gene_id", 
+            "example": "https://renkulab.io/projects/omnibenchmark/omni-batch-py/cellbench-py/files/blob/data/cellbench_data_py"}
+        }
+    }
+
