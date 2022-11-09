@@ -3,12 +3,16 @@ import os as os
 from jsonschema import validate
 import jsonref
 import jsonschema # <--
-import logging
+#import logging
 from os.path import dirname
-import re
+#import re
 import warnings
 
-## TODO: check if everything is used 
+class ValidationError(Exception):
+     def __init__(self, value):
+         self.value = value
+     def __str__(self):
+         return repr(self.value)
 
 
 def read_json_file(file_path):
@@ -107,6 +111,7 @@ def validate_requirements(benchmark, keyword, data_folder):
     regx = [a_ + ".*" + b_ for a_, b_ in zip(requir_names, requir_end)] 
 
     ## Validation
+    data_folder = os.path.join(data_folder, '')
     listdir = os.listdir(data_folder)
     import re
     r = re.compile('.*(%s).*'%regx)
@@ -123,7 +128,84 @@ def validate_requirements(benchmark, keyword, data_folder):
         elif len(files_found[i]) > 1: 
             msg = "Multiple files associated to "+ regx[i] +":\n"+str(files_found[i])
             warnings.warn(msg)
+    print("\nCongrats! All outputs meet the requirements of '", keyword, "'\n")
+
+
+def validate_all(benchmark, keyword, data_folder): 
+    """"
+    Simultaneous vadlidation of requirements and JSON files using the JSON schemas of Omnivalidator.
+    
+    Args: 
+        benchmark (str): benchmark name
+        keyword (str): keyword that defines the current step of the benchmark 
+        data_folder (str): path to the output files that need to be validated
+
+    """
+    from omniValidator import __path__ as omni_val_path     
+
+    ## Loads requir file
+    requir = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, 'output',  'requirements.json')
+    f = open(requir)
+    requir = json.load(f)
+
+    ## Parse requirements into regex
+    requir_names = list(requir['required'].keys())
+    requir_end = [requir['required'][sub]['end'] for sub in requir['required']]
+    regx = [a_ + ".*" + b_ for a_, b_ in zip(requir_names, requir_end)] 
+    requir_dict = dict(zip(requir_names, requir_end))
+
+    ## compile files and schemas
+    data_folder = os.path.join(data_folder, '')
+    listdir = os.listdir(data_folder)
+    import re
+    r = re.compile('.*(%s).*'%regx)
+    newlist = list(filter(r.match, listdir)) 
+    rcompiled = [re.compile('.*(%s).*'%reg) for reg in regx]
+    files_found = [list(filter(rcomp.match, listdir)) for rcomp in rcompiled]
+    print("Output files detected:")
+    print(files_found)
+    for i in range(len(files_found)): 
+        if len(files_found[i]) == 0:
+            msg = "no files associated to "+ regx[i]
+            print(msg)
+            break
+        elif len(files_found[i]) > 1: 
+            msg = "Multiple files associated to "+ regx[i] +":\n"+str(files_found[i])
+            warnings.warn(msg)
+    print("\nCongrats! All outputs meet the requirements of '", keyword, "'\n")
+    
+    ## Parsing json files
+    jsonk = [k for k, v in requir_dict.items() if v == 'json']
+    requir_json = dict((k, requir_dict[k]) for k in jsonk)
+    schemalist = [get_schema(benchmark, keyword, k) for k in requir_json.keys()]
+    files_found_dict = dict(zip(requir_names, files_found))
+    files_found_dict = dict((k, files_found_dict[k]) for k in jsonk)
+
+    schemaToFiles = dict(zip(schemalist, files_found_dict.values()))
+
+    for k in schemaToFiles.keys(): 
+        if len( schemaToFiles[k]) == 1: 
+            print(str(schemaToFiles[k][0]))
+            schemaToFiles[k] = data_folder + str(schemaToFiles[k][0])
         else: 
-            print("Congrats! All outputs meet the requirements of the current stage. ")
+            schemaToFiles[k] = [data_folder + v for v in schemaToFiles[k]]
+
+    ## Validation
+    for k in schemaToFiles.keys(): 
+        if isinstance(schemaToFiles[k], str): 
+            print("Validation for ", schemaToFiles[k], "...")
+            validate_json_file(schemaToFiles[k], k)
+            print("OK!")
+        elif isinstance(schemaToFiles[k], list): 
+            for v in  schemaToFiles[k]: 
+                print("Validation for ", v, "...")
+                isOk, message = validate_json_file(v, k)
+                if not isOk: 
+                    print("File not following the requirements. Please modify it.")
+                    break
+                else: 
+                    print("OK!")
+
+
 
 
