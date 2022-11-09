@@ -21,8 +21,9 @@ ov.validate_all(
     keyword = 'omni_batch_data', 
     data_folder = 'examples/csf-patients-py/data/csf_patient_py'
 )
-
 ```
+
+which will raise an `Exception` if an output file is missing or if a JSON file is badly formatted. 
 
 ### Validate required files only
 
@@ -36,7 +37,7 @@ ov.validate_requirements(
     data_folder = 'examples/csf-patients-py/data/csf_patient_py'
 )
 ```
-which will return an error message if any output is missing. 
+which will raise an `Exception` if an output file is missing. 
 
 If multiple output are detected, you will get a warning message such as below: 
 

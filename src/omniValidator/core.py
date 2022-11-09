@@ -74,11 +74,10 @@ def validate_json_file(json_input_path, json_schema_path):
         validate(instance=json_data, schema=req_schema)
     except jsonschema.exceptions.ValidationError as err:
         print(err)
-        err = "Given JSON data is InValid"
-        return False, err
+        return err
 
-    message = "Given JSON data is Valid"
-    return True, message
+    print("Given JSON data is valid!")
+    return True
 
 
 
@@ -123,8 +122,7 @@ def validate_requirements(benchmark, keyword, data_folder):
     for i in range(len(files_found)): 
         if len(files_found[i]) == 0:
             msg = "no files associated to "+ regx[i]
-            print(msg)
-            break
+            raise Exception(msg)
         elif len(files_found[i]) > 1: 
             msg = "Multiple files associated to "+ regx[i] +":\n"+str(files_found[i])
             warnings.warn(msg)
@@ -132,7 +130,7 @@ def validate_requirements(benchmark, keyword, data_folder):
 
 
 def validate_all(benchmark, keyword, data_folder): 
-    """"
+    """
     Simultaneous vadlidation of requirements and JSON files using the JSON schemas of Omnivalidator.
     
     Args: 
@@ -185,7 +183,6 @@ def validate_all(benchmark, keyword, data_folder):
 
     for k in schemaToFiles.keys(): 
         if len( schemaToFiles[k]) == 1: 
-            print(str(schemaToFiles[k][0]))
             schemaToFiles[k] = data_folder + str(schemaToFiles[k][0])
         else: 
             schemaToFiles[k] = [data_folder + v for v in schemaToFiles[k]]
@@ -199,12 +196,12 @@ def validate_all(benchmark, keyword, data_folder):
         elif isinstance(schemaToFiles[k], list): 
             for v in  schemaToFiles[k]: 
                 print("Validation for ", v, "...")
-                isOk, message = validate_json_file(v, k)
-                if not isOk: 
-                    print("File not following the requirements. Please modify it.")
-                    break
-                else: 
-                    print("OK!")
+                isOk = validate_json_file(v, k)
+                if isOk == True: 
+                    return True
+                else:
+                    msg = "File '"+ v + "' not following the requirements."
+                    raise Exception(msg)
 
 
 
