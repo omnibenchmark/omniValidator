@@ -5,7 +5,7 @@ import jsonref
 import jsonschema # <--
 #import logging
 from os.path import dirname
-#import re
+import re
 import warnings
 
 class ValidationError(Exception):
@@ -64,7 +64,7 @@ def validate_json_file(json_input_path, json_schema_path):
         json_schema_path: path to the schema file
 
     Returns: 
-        boolean, with error message if invalid. 
+        boolean, with error message if invalid. If valid, returns True.
 
     """
     req_schema = read_json_file(json_schema_path)
@@ -81,23 +81,48 @@ def validate_json_file(json_input_path, json_schema_path):
 
 
 
-
-
-def validate_requirements(benchmark, keyword, data_folder):
+def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_folder=None):
     """
-    Validates the outputs of an Omnibenchmark project. 
+    Validates the outputs of an Omnibenchmark project from files or from an `omnibenchmark` object.
+
+    If `omni_obj` is not specified, all other arguments should be provided. 
 
     Args: 
+        omni_obj (omniObject): omni object from the omnibenchmark module
         benchmark (str):  benchmark name
         keyword (str): keyword that defines the current step of the benchmark 
-        data_folder (str): path to the output files that need to be validated
+        data_folder (str): path to the output files that need to be validated.
 
     Returns: 
-        Error, 
+        Raises an Exception error is an output file is missing. Else, returns True.
 
 
     """
-    from omniValidator import __path__ as omni_val_path     
+    from omniValidator import __path__ as omni_val_path   
+
+     # args requirements
+    if omni_obj is None:
+        if benchmark is None and keyword is None and data_folder is None: 
+            msg = " if `omni_obj` is not specified, the other arguments are required."
+            raise Exception(msg)
+    if data_folder is not None and omni_obj is not None: 
+        msg = "both `data_folder` and `omni_obj` are provided but only 1 required. Only `omni_obj` will be used."
+        warnings.warn(msg)
+    if omni_obj is not None: 
+        if keyword is not None:
+            msg = "both `omni_obj` and `keyword` are provided. Using `keyword` argument only."
+            warnings.warn(msg)
+        else: 
+            if len(omni_obj.keyword) > 2: 
+                msg = "multiple keywords found in the `omni_obj`. Using the first one."
+                warnings.warn(msg)
+            keyword = omni_obj.keyword[0]
+
+        if benchmark is not None: 
+            msg = "both `omni_obj` and `benchmark` are provided. Using `benchmark` argument only."
+            warnings.warn(msg)
+        else: 
+            benchmark = omni_obj.benchmark_name        
 
     ## Loads requir file
     requir = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, 'output',  'requirements.json')
@@ -109,12 +134,15 @@ def validate_requirements(benchmark, keyword, data_folder):
     requir_end = [requir['required'][sub]['end'] for sub in requir['required']]
     regx = [a_ + ".*" + b_ for a_, b_ in zip(requir_names, requir_end)] 
 
-    ## Validation
-    data_folder = os.path.join(data_folder, '')
-    listdir = os.listdir(data_folder)
-    import re
+    ## list
+    if omni_obj is None: 
+        data_folder = os.path.join(data_folder, '')
+        listdir = os.listdir(data_folder)
+    else: 
+        listdir = [omni_obj.outputs.file_mapping[0]['output_files'][k] for k in omni_obj.outputs.file_mapping[0]['output_files'].keys()]
+
+    ## regex and find
     r = re.compile('.*(%s).*'%regx)
-    newlist = list(filter(r.match, listdir)) 
     rcompiled = [re.compile('.*(%s).*'%reg) for reg in regx]
     files_found = [list(filter(rcomp.match, listdir)) for rcomp in rcompiled]
     print("Output files detected:")
@@ -127,6 +155,7 @@ def validate_requirements(benchmark, keyword, data_folder):
             msg = "Multiple files associated to "+ regx[i] +":\n"+str(files_found[i])
             warnings.warn(msg)
     print("\nCongrats! All outputs meet the requirements of '", keyword, "'\n")
+    return True
 
 
 def validate_all(benchmark, keyword, data_folder): 
@@ -138,9 +167,20 @@ def validate_all(benchmark, keyword, data_folder):
         keyword (str): keyword that defines the current step of the benchmark 
         data_folder (str): path to the output files that need to be validated
 
+    Returns:
+        Raises an Exception error is an output file is missing or a JSON badly formatted. Else, returns True.
+
     """
     from omniValidator import __path__ as omni_val_path     
 
+    # args requirements
+    if data_folder is None and omni_obj is None:
+        msg = "`data_folder` or `omni_obj` are required."
+        raise Exception(msg)
+    if data_folder is not None and omni_obj is not None: 
+        msg = "both `data_folder` and `omni_obj` are provided but only 1 required. Only `omni_obj` will be used."
+        warnings.warn(msg)
+        
     ## Loads requir file
     requir = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, 'output',  'requirements.json')
     f = open(requir)
@@ -202,6 +242,8 @@ def validate_all(benchmark, keyword, data_folder):
                 else:
                     msg = "File '"+ v + "' not following the requirements."
                     raise Exception(msg)
+    
+    return True
 
 
 

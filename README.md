@@ -1,10 +1,14 @@
 # omniValidator
 
-Python module to check files in an Omnibenchmark.
+Python module to check files in an Omnibenchmark project. 
 
 ## Usage
 
 The following sections assume that your working directory is an Omnibenchmark project associated to an **existing** Omnibenchmark and stage (data, method, metric, etc.).
+
+You can check [here](https://github.com/ansonrel/omniValidator/tree/main/src/omniValidator/schemas) if the Omnibenchmark you are working on has available validators. 
+
+If you are working with an `omnibenchmark` object, `omniValidator.validate_requirements` can be used without other specifications. 
 
 ### Validate required files and JSON files
 
@@ -27,17 +31,22 @@ which will raise an `Exception` if an output file is missing or if a JSON file i
 
 ### Validate required files only
 
-The output files of an Omnibenchmark workflow can be validated as follows: 
+The output files of an Omnibenchmark workflow can be validated by specifying an **`omnibenchmark` object**: 
 
 ```
 import omniValidator as ov
-ov.validate_requirements(
-    benchmark = 'omni_batch_py', 
-    keyword = 'omni_batch_data', 
-    data_folder = 'examples/csf-patients-py/data/csf_patient_py'
-)
+from omnibenchmark.utils.build_omni_object import get_omni_object_from_yaml
+from omnibenchmark.renku_commands.general import renku_save
+
+## Load config
+omni_obj = get_omni_object_from_yaml('src/config.yaml')
+
+## Validates the output mapping
+ov.validate_requirements(omni_obj = omni_obj)
+
 ```
-which will raise an `Exception` if an output file is missing. 
+
+Which will return a boolean (`True`) if valid and an `Exception` error if some output are missing. 
 
 If multiple output are detected, you will get a warning message such as below: 
 
@@ -47,6 +56,17 @@ If multiple output are detected, you will get a warning message such as below:
 ```
 
 It is highly advised to check your workflow if this happens as it might create issues in downstream steps. 
+
+The output files of an Omnibenchmark workflow can also be validated with **manual specifications, assuming that the output files were already generated**: 
+
+```
+import omniValidator as ov
+ov.validate_requirements(
+    benchmark = 'omni_batch_py', 
+    keyword = 'omni_batch_data', 
+    data_folder = 'examples/csf-patients-py/data/csf_patient_py'
+)
+```
 
 Validation requirements can be accessed on the [official repo of the module](https://github.com/ansonrel/omniValidator/tree/main/src/omniValidator/schemas). 
 
@@ -77,6 +97,4 @@ Which returns a boolean (`True`) if your JSON is valid.
 
 You can modify existing requirements/ JSON schemas or add new ones using pull requests or by opening an issue on the Github page of the module. 
 
-### New requirements for a Omnibenchmark stage
-
-Either by PR or by opening a new issue on github. 
+All schemas and requirements are in the [`src/omniValidator/schemas`](https://github.com/ansonrel/omniValidator/tree/main/src/omniValidator/schemas) folder of the module. 

@@ -1,3 +1,8 @@
 # Add your own dependencies to this file.
 schema
 json
+os
+jsconschema
+jsonref
+re
+warnings
