@@ -174,10 +174,10 @@ def validate_all(benchmark, keyword, data_folder):
     from omniValidator import __path__ as omni_val_path     
 
     # args requirements
-    if data_folder is None and omni_obj is None:
+    if data_folder is None:
         msg = "`data_folder` or `omni_obj` are required."
         raise Exception(msg)
-    if data_folder is not None and omni_obj is not None: 
+    if data_folder is not None: 
         msg = "both `data_folder` and `omni_obj` are provided but only 1 required. Only `omni_obj` will be used."
         warnings.warn(msg)
         
