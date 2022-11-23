@@ -1,0 +1,27 @@
+{
+    "Description": "A description of the required file outputs. In addition to the presence of the required files, omniValidator will also check some fields described below (e.g. file extension, 'end' field).",
+    "fields": {
+        "description": "A description of the required file", 
+        "end": "File extension for this file type", 
+        "fields": "Required fields/ attributes of the outputs."
+
+    },
+    "required": {
+        "norm_counts": {
+            "description": "Normalized count matrix in compressed format.", 
+            "end": "mtx.gz",
+            "fields": "genes(rows) x cells(columns)", 
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-batch-processed-py/-/tree/master/data/omni_batch_processed_py"},
+        "red_dim": {
+            "description": "Dimension reduction of the count matrix", 
+            "end": "mtx.gz",
+            "fields": "cells(rows) x reduced dimensions(columns)", 
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-batch-processed-py/-/tree/master/data/omni_batch_processed_py"},
+        "hvg_out": {
+            "description": "List of genes and optional fields for highly variable genes.", 
+            "end": "json",
+            "fields": "(mandatory) a 'gene_id' with Ensembl IDs, (optional) field(s) with boolean values that state whether the genes are HVG for a particular method.", 
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-batch-processed-py/-/tree/master/data/omni_batch_processed_py"}
+        }
+    }
+

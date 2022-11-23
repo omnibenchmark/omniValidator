@@ -1,0 +1,22 @@
+{
+    "Description": "A description of the required file outputs for the 'metric' modules of omni-batch. In addition to the presence of the required files, omniValidator will also check some fields described below (e.g. file extension, 'end' field).",
+    "fields": {
+        "description": "a description of the required file", 
+        "end": "File extension for this file type", 
+        "fields": "Required fields/ attributes of the outputs."
+
+    },
+    "required": {
+        "metric_res": {
+            "description": "Metric results for each cell.", 
+            "end": "mtx.gz",
+            "fields": "cells(rows) x 1", 
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/lisi-py/-/tree/master/data/lisi_py"}, 
+        "metric_info": {
+            "description": "Metadata information used by the bettr app", 
+            "end": "json",
+            "fields": ["flip", "max", "min", "group", "name", "imput"], 
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/lisi-py/-/tree/master/data/lisi_py"}    
+        }
+    }
+

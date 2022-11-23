@@ -1,7 +1,7 @@
 {
-    "Description": "A description of the required file outputs for the 'data' modules of omni-batch. In addition to the presence of the required files, omniValidator will also check some fields described below (e.g. file extension, 'end' field).",
+    "Description": "A description of the required file outputs. In addition to the presence of the required files, omniValidator will also check some fields described below (e.g. file extension, 'end' field).",
     "fields": {
-        "description": "a description of the required file", 
+        "description": "A description of the required file", 
         "end": "File extension for this file type", 
         "fields": "Required fields/ attributes of the outputs."
 
