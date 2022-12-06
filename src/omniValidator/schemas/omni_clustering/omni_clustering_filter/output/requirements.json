@@ -1,0 +1,22 @@
+{
+    "Description": "A description of the required file outputs. In addition to the presence of the required files, omniValidator will also check some fields described below (e.g. file extension, 'end' field).",
+    "fields": {
+        "description": "A description of the required file", 
+        "end": "File extension for this file type", 
+        "fields": "Required fields/ attributes of the outputs."
+
+    },
+    "required": {
+        "filtered_counts": {
+            "description": "Filtered (if applicable) count matrix in compressed format.", 
+            "end": "mtx.gz",
+            "fields": "genes(rows) x cells(columns)", 
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/filter-expression/-/tree/master/data/filter_expression"},
+        "filtered_logcounts": {
+            "description": "Filtered (if applicable) normalized count matrix in compressed format.", 
+            "end": "mtx.gz",
+            "fields": "genes(rows) x cells(columns)", 
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/filter-expression/-/tree/master/data/filter_expression"}
+        }
+    }
+
