@@ -1,8 +1,3 @@
 # Add your own dependencies to this file.
-schema
-json
-os
-jsconschema
-jsonref
-re
-warnings
+jsonref==1.0.1
+jsonschema==4.17.3
