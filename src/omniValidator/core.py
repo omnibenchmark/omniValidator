@@ -154,7 +154,7 @@ def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_fold
         elif len(files_found[i]) > 1: 
             msg = "Multiple files associated to "+ regx[i] +":\n"+str(files_found[i])
             warnings.warn(msg)
-    print("\nCongrats! All outputs meet the requirements of '", keyword, "'\n")
+    print("\nValidated! All outputs meet the requirements of '", keyword, "'\n")
     return True
 
 
@@ -210,7 +210,7 @@ def validate_all(benchmark, keyword, data_folder):
         elif len(files_found[i]) > 1: 
             msg = "Multiple files associated to "+ regx[i] +":\n"+str(files_found[i])
             warnings.warn(msg)
-    print("\nCongrats! All outputs meet the requirements of '", keyword, "'\n")
+    print("\nValidated! All outputs meet the requirements of '", keyword, "'\n")
     
     ## Parsing json files
     jsonk = [k for k, v in requir_dict.items() if v == 'json']

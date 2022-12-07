@@ -11,12 +11,7 @@
             "description": "Metric results (numeric value) for each clustering output.", 
             "end": "json",
             "fields": "", 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/adjusted-rand-index/-/blob/master/data/adjusted_rand_index_clust/adjusted_rand_index_clust_pca-hc_007b7__metric_res.json"}, 
-        "metric_info": {
-            "description": "Metadata information used by the bettr app", 
-            "end": "json",
-            "fields": ["flip", "max", "min", "group", "name", "imput"], 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/adjusted-rand-index/-/blob/master/data/adjusted_rand_index_clust"}    
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/adjusted-rand-index/-/blob/master/data/adjusted_rand_index_clust/adjusted_rand_index_clust_pca-hc_007b7__metric_res.json"}
         }
     }
 
