@@ -13,6 +13,31 @@ here = pathlib.Path(__file__).parent.resolve()
 # Get the long description from the README file
 long_description = (here / "README.md").read_text(encoding="utf-8")
 
+
+
+def read_requirements(filename: str):
+    with open(filename) as requirements_file:
+        import re
+
+        def fix_url_dependencies(req: str) -> str:
+            """Pip and setuptools disagree about how URL dependencies should be handled."""
+            m = re.match(
+                r"^(git\+)?(https|ssh)://(git@)?github\.com/([\w-]+)/(?P<name>[\w-]+)\.git", req
+            )
+            if m is None:
+                return req
+            else:
+                return f"{m.group('name')} @ {req}"
+
+        requirements = []
+        for line in requirements_file:
+            line = line.strip()
+            if line.startswith("#") or len(line) <= 0:
+                continue
+            requirements.append(fix_url_dependencies(line))
+    return requirements
+
+
 # Arguments marked as "Required" below must be included for upload to PyPI.
 # Fields marked as "Optional" may be commented out.
 
@@ -114,7 +139,9 @@ setup(
     #
     #   py_modules=["my_module"],
     #
-    packages=find_packages(where="src"),  # Required
+    packages=find_packages(
+        exclude=["*.tests", "*.tests.*", "tests.*", "tests"],
+    ),  # Required
     # Specify which Python versions you support. In contrast to the
     # 'Programming Language' classifiers above, 'pip install' will check this
     # and refuse to install the project if the version does not match. See
@@ -126,7 +153,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/discussions/install-requires-vs-requirements/
-    #install_requires=["peppercorn"],  # Optional
+    install_requires=read_requirements("requirements.txt"),
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
     # syntax, for example:
