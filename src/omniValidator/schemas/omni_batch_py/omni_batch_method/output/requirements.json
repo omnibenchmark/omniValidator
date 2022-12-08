@@ -3,20 +3,22 @@
     "fields": {
         "description": "A description of the required file", 
         "end": "File extension for this file type", 
-        "fields": "Required fields/ attributes of the outputs."
-
+        "fields": "Required fields/ attributes of the outputs.", 
+        "substitutable_with": "Other outputs that can be used as a substitute."
     },
     "required": {
         "corrected_counts": {
             "description": "Corrected count matrix.", 
             "end": "mtx.gz",
             "fields": "genes(rows) x cells(columns)", 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-mnn-py/-/tree/master/data/omni_mnn_py"},
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-mnn-py/-/tree/master/data/omni_mnn_py", 
+            "substitutable_with":["corrected_dim_file"]},
         "corrected_dim_file": {
             "description": "Corrected dimension reduction of the count matrix", 
             "end": "mtx.gz",
             "fields": "cells(rows) x reduced dimensions(columns)", 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-mnn-py/-/tree/master/data/omni_mnn_py"}
-        }
+            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-mnn-py/-/tree/master/data/omni_mnn_py", 
+            "substitutable_with":["corrected_counts"]}
     }
+}
 

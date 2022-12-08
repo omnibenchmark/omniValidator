@@ -145,12 +145,35 @@ def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_fold
     r = re.compile('.*(%s).*'%regx)
     rcompiled = [re.compile('.*(%s).*'%reg) for reg in regx]
     files_found = [list(filter(rcomp.match, listdir)) for rcomp in rcompiled]
+    subst =[[]]*len(requir_names)
+    CNT = 0
+    for i in requir_names: 
+        try: 
+            subst[CNT] = requir['required'][i]['substitutable_with']
+            CNT = CNT +1
+        except: 
+            CNT = CNT +1
+            continue
+
     print("Output files detected:")
     print(files_found)
     for i in range(len(files_found)): 
         if len(files_found[i]) == 0:
-            msg = "no files associated to "+ regx[i]
-            raise Exception(msg)
+
+            # try to search among substitutes files
+            if len(subst[i]) >0: 
+                for j in range(len(subst[i])): 
+                    # all substitutes tried, stop.
+                    if len(files_found[requir_names.index(subst[i][j])]) > 0: 
+                        print("Substitute found for", regx[i], ":", subst[i][j])
+                    elif j == len(subst[i])-1:
+                        msg = "no files associated to "+ regx[i]
+                        print(msg)
+                        raise Exception(msg)
+            else: 
+                msg = "no files associated to "+ regx[i]
+                raise Exception(msg)
+
         elif len(files_found[i]) > 1: 
             msg = "Multiple files associated to "+ regx[i] +":\n"+str(files_found[i])
             warnings.warn(msg)
@@ -200,13 +223,35 @@ def validate_all(benchmark, keyword, data_folder):
     newlist = list(filter(r.match, listdir)) 
     rcompiled = [re.compile('.*(%s).*'%reg) for reg in regx]
     files_found = [list(filter(rcomp.match, listdir)) for rcomp in rcompiled]
+    subst =[[]]*len(requir_names)
+    CNT = 0
+    for i in requir_names: 
+        try: 
+            subst[CNT] = requir['required'][i]['substitutable_with']
+            CNT = CNT +1
+        except: 
+            CNT = CNT +1
+            continue
+
     print("Output files detected:")
     print(files_found)
     for i in range(len(files_found)): 
         if len(files_found[i]) == 0:
-            msg = "no files associated to "+ regx[i]
-            print(msg)
-            break
+
+            # try to search among substitutes files
+            if len(subst[i]) >0: 
+                for j in range(len(subst[i])): 
+                    # all substitutes tried, stop.
+                    if len(files_found[requir_names.index(subst[i][j])]) > 0: 
+                        print("Substitute found for", regx[i], ":", subst[i][j])
+                    elif j == len(subst[i])-1:
+                        msg = "no files associated to "+ regx[i]
+                        print(msg)
+                        raise Exception(msg)
+            else: 
+                msg = "no files associated to "+ regx[i]
+                raise Exception(msg)
+
         elif len(files_found[i]) > 1: 
             msg = "Multiple files associated to "+ regx[i] +":\n"+str(files_found[i])
             warnings.warn(msg)

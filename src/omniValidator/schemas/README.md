@@ -19,3 +19,30 @@ BENCHMARK_X
 
 ```
 
+## Important fields for `requirements.json` 
+
+The fields below are checked by the `Omnivalidator`. All extra fields are metadata meant to help the users but will not be checked against the outputs of your project. 
+
+### `required`
+
+Values in the `required` fields are expected to be present in the `omniobject` or output files. For an omniobject, the values in `omni_obj.outputs.file_mapping` are checked. These values should also be mappable in the name of the output files (e.g. `counts` files should produce files of format `[PREFIX]_counts.[END]). 
+
+#### a. ...`end`
+
+The extension of each `required` files is expected to have an `end` extension. The validator will check for these file extensions. 
+
+#### b. (optional) ...`substitutable_with`
+
+Some outputs can be substitutable, meaning that different outputs can be interchangeable if one of them is missing. The substitute to any field can be defined with an extra field of form: 
+
+```
+...
+"required": {
+    "outputA": {
+        "description": "Some output", 
+        "end": ".txt",
+        "substitutable_with":["outputB", "outputC]}
+
+```
+
+in the above example, `outputA` may be absent from the `omniobject` or the output files if `outputB` or `outputC` are defined.
