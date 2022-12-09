@@ -9,7 +9,7 @@
     "required": {
         "metric_res": {
             "description": "Metric results for each cell.", 
-            "end": "mtx.gz",
+            "end": "json",
             "fields": "cells(rows) x 1", 
             "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/lisi-py/-/tree/master/data/lisi_py"}   
         }
