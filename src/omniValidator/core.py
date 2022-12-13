@@ -7,6 +7,10 @@ import jsonschema # <--
 from os.path import dirname
 import re
 import warnings
+from json2table import convert
+from IPython.core.display import display, HTML
+
+
 
 class ValidationError(Exception):
      def __init__(self, value):
@@ -291,5 +295,44 @@ def validate_all(benchmark, keyword, data_folder):
     return True
 
 
+def display_requirements(omni_obj=None, benchmark=None, keyword=None):
+    """
+    Displays the requirements of an Omnibenchmark's module, fetched from https://github.com/ansonrel/omniValidator/tree/main/src/omniValidator/schemas.
 
+    If `omni_obj` is not specified, all other arguments should be provided. 
+
+    Args: 
+        omni_obj (omniObject): omni object from the omnibenchmark module
+        benchmark (str):  benchmark name
+        keyword (str): keyword that defines the current step of the benchmark 
+
+    Returns: 
+        A parsed table of the requirements in an `IPython.core.display.HTML` object.
+
+
+    """
+    from omniValidator import __path__ as omni_val_path   
+    if omni_obj is not None: 
+        if keyword is not None:
+            msg = "both `omni_obj` and `keyword` are provided. Using `keyword` argument only."
+            warnings.warn(msg)
+        else: 
+            if len(omni_obj.keyword) > 2: 
+                msg = "multiple keywords found in the `omni_obj`. Using the first one."
+                warnings.warn(msg)
+            keyword = omni_obj.keyword[0]
+        if benchmark is not None: 
+            msg = "both `omni_obj` and `benchmark` are provided. Using `benchmark` argument only."
+            warnings.warn(msg)
+        else: 
+            benchmark = omni_obj.benchmark_name        
+
+    ## Loads requir file
+    requir = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, 'output',  'requirements.json')
+    f = open(requir)
+    requir = json.load(f)
+    build_direction = "LEFT_TO_RIGHT"
+    table_attributes = {"style" : "width:100%"}
+    html = convert(requir, build_direction=build_direction, table_attributes=table_attributes)
+    display(HTML(html))
 
