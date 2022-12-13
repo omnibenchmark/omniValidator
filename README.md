@@ -10,6 +10,25 @@ You can check [here](https://github.com/ansonrel/omniValidator/tree/main/src/omn
 
 If you are working with an `omnibenchmark` object, `omniValidator.validate_requirements` can be used without other specifications. 
 
+### Display the requirements
+
+The requirements for a given Omnibenchmark module can be visualized with the following function: 
+
+```
+import omniValidator as ov
+from omnibenchmark.utils.build_omni_object import get_omni_object_from_yaml
+from omnibenchmark.renku_commands.general import renku_save
+
+## Load config
+omni_obj = get_omni_object_from_yaml('src/config.yaml')
+
+## shows the requirements
+ov.display_requirements(omni_obj = omni_obj)
+
+```
+
+which will render an html table of the requirements needed for the Omnibenchmark project you are working on. 
+
 ### Validate required files and JSON files
 
 The `validate_all` function of `omniValidator` shows you how to check: 
