@@ -6,12 +6,24 @@
         "fields": "Required fields/ attributes of the outputs."
 
     },
-    "required": {
-        "cluster_res": {
-            "description": "Ground-truth information and clustering results for each cell.", 
-            "end": "json",
-            "fields": ["pheno_id", "cluster", "cell_id"], 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/pca-hc/-/tree/master/data/pca-hc"}
+    "inputs":{
+        "keywords": "omni_clustering_filter", 
+        "files":  ["filtered_logcounts", "meta_file"], 
+        "prefix":{
+            "filtered_logcounts": "_logcounts", 
+            "meta_file": "__metameta" 
         }
+    },
+    "outputs_files": {
+        "cluster_res": {
+            "end": "json",
+            "description": "Ground-truth information and clustering results for each cell.", 
+            "fields": ["pheno_id", "cluster", "cell_id"]
+        }
+    },
+    "example": {
+        "config": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/pca-hc/-/blob/master/src/config.yaml", 
+        "data": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/pca-hc/-/tree/master/data/pca-hc"
     }
+}
 

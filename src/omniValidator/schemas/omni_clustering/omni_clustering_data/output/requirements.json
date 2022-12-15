@@ -4,29 +4,31 @@
         "description": "A description of the required file", 
         "end": "File extension for this file type", 
         "fields": "Required fields/ attributes of the outputs."
-
     },
-    "required": {
+    "outputs_files": {
         "counts": {
-            "description": "Count matrix in compressed format.", 
             "end": "mtx.gz",
-            "fields": "genes(rows) x cells(columns)", 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/koh/-/tree/master/data/koh"},
+            "description": "Count matrix in compressed format.", 
+            "fields": "genes(rows) x cells(columns)"
+        },
         "meta": {
+            "end": "json",
             "description": "Column (cell) meta information associated to the count data.", 
-            "end": "json",
-            "fields": ["pheno_id", "cell_id"], 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/koh/-/tree/master/data/koh"},
+            "fields": ["pheno_id", "cell_id"]
+        },
         "data_info": {
+            "end": "json",
             "description": "General information about the data. Additional fields can be added on top of required ones.", 
-            "end": "json",
-            "fields": ["link", "tissue", "sequencing_protocol", "n_cells", "n_genes", "n_cluster", "description"], 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/koh/-/tree/master/data/koh"},
+            "fields": ["link", "tissue", "sequencing_protocol", "n_cells", "n_genes", "n_cluster", "description"] 
+        },
         "feature": {
-            "description": "Rows (features/ genes) information, associated to the count data.", 
             "end": "json",
-            "fields": "gene_id", 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/koh/-/tree/master/data/koh"}
-        }
+            "description": "Rows (features/ genes) information, associated to the count data.", 
+            "fields": "gene_id"}
+    },
+    "example": {
+        "config": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/koh/-/blob/master/src/config.yaml", 
+        "data": "https://renkulab.io/gitlab/omnibenchmark/omni_clustering/koh/-/tree/master/data/koh"
     }
+}
 

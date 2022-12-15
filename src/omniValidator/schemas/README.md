@@ -23,13 +23,13 @@ BENCHMARK_X
 
 The fields below are checked by the `Omnivalidator`. All extra fields are metadata meant to help the users but will not be checked against the outputs of your project. 
 
-### `required`
+### `outputs_files`
 
-Values in the `required` fields are expected to be present in the `omniobject` or output files. For an omniobject, the values in `omni_obj.outputs.file_mapping` are checked. These values should also be mappable in the name of the output files (e.g. `counts` files should produce files of format `[PREFIX]_counts.[END]). 
+Values in the `outputs_files` fields are expected to be present in the `omniobject` or output files. For an omniobject, the values in `omni_obj.outputs.file_mapping` are checked. These values should also be mappable in the name of the output files (e.g. `counts` files should produce files of format `[PREFIX]_counts.[END]). 
 
 #### a. ...`end`
 
-The extension of each `required` files is expected to have an `end` extension. The validator will check for these file extensions. 
+The extension of each `outputs_files` files is expected to have an `end` extension. The validator will check for these file extensions. 
 
 #### b. (optional) ...`substitutable_with`
 
@@ -37,7 +37,7 @@ Some outputs can be substitutable, meaning that different outputs can be interch
 
 ```
 ...
-"required": {
+"outputs_files": {
     "outputA": {
         "description": "Some output", 
         "end": ".txt",

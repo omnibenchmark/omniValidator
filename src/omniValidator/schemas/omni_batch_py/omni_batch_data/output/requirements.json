@@ -4,28 +4,32 @@
         "description": "A description of the required file", 
         "end": "File extension for this file type", 
         "fields": "Required fields/ attributes of the outputs."
-    },
-    "required": {
+    }, 
+    "outputs_files": {
         "counts": {
-            "description": "Count matrix in compressed format.", 
             "end": "mtx.gz",
-            "fields": "genes(rows) x cells(columns)", 
-            "example": "https://renkulab.io/projects/omnibenchmark/omni-batch-py/cellbench-py/files/blob/data/cellbench_data_py"}, 
+            "description": "Count matrix in compressed format.", 
+            "fields": "genes(rows) x cells(columns)"
+        }, 
         "meta": {
+            "end": "json",            
             "description": "Column (cell) meta information associated to the count data.", 
-            "end": "json",
-            "fields": ["batch_id", "cell_id", "cluster_id"], 
-            "example": "https://renkulab.io/projects/omnibenchmark/omni-batch-py/cellbench-py/files/blob/data/cellbench_data_py"},
+            "fields": ["batch_id", "cell_id", "cluster_id"]
+        },
         "data_info": {
+            "end": "json",
             "description": "General information about the data. Additional fields can be added on top of required ones.", 
-            "end": "json",
-            "fields": ["link", "tissue", "sequencing_protocol", "n_cells", "n_genes", "n_batches", "description"], 
-            "example": "https://renkulab.io/projects/omnibenchmark/omni-batch-py/cellbench-py/files/blob/data/cellbench_data_py" },
+            "fields": ["link", "tissue", "sequencing_protocol", "n_cells", "n_genes", "n_batches", "description"]
+        },
         "feature": {
-            "description": "Rows (features/ genes) information, associated to the count data.", 
             "end": "json",
-            "fields": "gene_id", 
-            "example": "https://renkulab.io/projects/omnibenchmark/omni-batch-py/cellbench-py/files/blob/data/cellbench_data_py"}
-        }
+            "description": "Rows (features/ genes) information, associated to the count data.", 
+            "fields": "gene_id"}
+        }, 
+    "example": {
+        "config": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/csf-patients-py/-/blob/master/src/config.yaml", 
+        "data": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/csf-patients-py/-/tree/master/data/csf_patient_py"
     }
+
+}
 

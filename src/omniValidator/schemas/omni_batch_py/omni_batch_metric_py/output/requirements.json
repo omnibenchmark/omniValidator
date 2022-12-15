@@ -6,12 +6,24 @@
         "fields": "Required fields/ attributes of the outputs."
 
     },
-    "required": {
-        "metric_res": {
-            "description": "Metric results for each cell.", 
-            "end": "json",
-            "fields": "cells(rows) x 1", 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/lisi-py/-/tree/master/data/lisi_py"}   
+    "inputs":{
+        "keywords": "omni_batch_method", 
+        "files": ["corrected_dim_file", "meta_file"], 
+        "prefix":{
+            "corrected_dim_file": ["_corrected_dim_file", "_corrected_counts"], 
+            "meta_file": "_meta"
         }
+    },
+    "outputs_files": {
+        "metric_res": {
+            "end": "json",
+            "description": "Metric results for each cell.", 
+            "fields": "cells(rows) x 1"
+        }   
+    },
+    "example": {
+        "config": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-mnn-py/-/blob/master/src/config.yaml", 
+        "data": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/cms-py/-/tree/master/data/cms_py"
     }
+}
 

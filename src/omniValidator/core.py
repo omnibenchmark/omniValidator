@@ -134,8 +134,8 @@ def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_fold
     requir = json.load(f)
 
     ## Parse requirements into regex
-    requir_names = list(requir['required'].keys())
-    requir_end = [requir['required'][sub]['end'] for sub in requir['required']]
+    requir_names = list(requir['outputs_files'].keys())
+    requir_end = [requir['outputs_files'][sub]['end'] for sub in requir['outputs_files']]
     regx = [a_ + ".*" + b_ for a_, b_ in zip(requir_names, requir_end)] 
 
     ## list
@@ -153,7 +153,7 @@ def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_fold
     CNT = 0
     for i in requir_names: 
         try: 
-            subst[CNT] = requir['required'][i]['substitutable_with']
+            subst[CNT] = requir['outputs_files'][i]['substitutable_with']
             CNT = CNT +1
         except: 
             CNT = CNT +1
@@ -214,8 +214,8 @@ def validate_all(benchmark, keyword, data_folder):
     requir = json.load(f)
 
     ## Parse requirements into regex
-    requir_names = list(requir['required'].keys())
-    requir_end = [requir['required'][sub]['end'] for sub in requir['required']]
+    requir_names = list(requir['outputs_files'].keys())
+    requir_end = [requir['outputs_files'][sub]['end'] for sub in requir['required']]
     regx = [a_ + ".*" + b_ for a_, b_ in zip(requir_names, requir_end)] 
     requir_dict = dict(zip(requir_names, requir_end))
 
@@ -231,7 +231,7 @@ def validate_all(benchmark, keyword, data_folder):
     CNT = 0
     for i in requir_names: 
         try: 
-            subst[CNT] = requir['required'][i]['substitutable_with']
+            subst[CNT] = requir['outputs_files'][i]['substitutable_with']
             CNT = CNT +1
         except: 
             CNT = CNT +1

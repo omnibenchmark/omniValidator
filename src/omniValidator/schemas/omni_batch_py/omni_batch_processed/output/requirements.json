@@ -6,22 +6,32 @@
         "fields": "Required fields/ attributes of the outputs."
 
     },
-    "required": {
-        "norm_counts": {
-            "description": "Normalized count matrix in compressed format.", 
-            "end": "mtx.gz",
-            "fields": "genes(rows) x cells(columns)", 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-batch-processed-py/-/tree/master/data/omni_batch_processed_py"},
-        "red_dim": {
-            "description": "Dimension reduction of the count matrix", 
-            "end": "mtx.gz",
-            "fields": "cells(rows) x reduced dimensions(columns)", 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-batch-processed-py/-/tree/master/data/omni_batch_processed_py"},
-        "hvg_out": {
-            "description": "List of genes and optional fields for highly variable genes.", 
-            "end": "json",
-            "fields": "(mandatory) a 'gene_id' with Ensembl IDs, (optional) field(s) with boolean values that state whether the genes are HVG for a particular method.", 
-            "example": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-batch-processed-py/-/tree/master/data/omni_batch_processed_py"}
+    "inputs":{
+        "keywords": "omni_batch_data", 
+        "files": ["count_file", "meta_file", "feature_file"], 
+        "prefix":{
+            "count_file": "_counts", 
+            "meta_file": "_meta", 
+            "feature_file": "_feature"
         }
+    },
+    "outputs_files": {
+        "norm_counts": {
+            "end": "mtx.gz",
+            "description": "Normalized count matrix in compressed format.", 
+            "fields": "genes(rows) x cells(columns)"},
+        "red_dim": {
+            "end": "mtx.gz",
+            "description": "Dimension reduction of the count matrix", 
+            "fields": "cells(rows) x reduced dimensions(columns)"},
+        "hvg_out": {
+            "end": "json",
+            "description": "List of genes and optional fields for highly variable genes.", 
+            "fields": "(mandatory) a 'gene_id' with Ensembl IDs, (optional) field(s) with boolean values that state whether the genes are HVG for a particular method."}
+        },
+    "example": {
+        "config": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-batch-processed-py/-/blob/master/src/config.yaml", 
+        "data": "https://renkulab.io/gitlab/omnibenchmark/omni-batch-py/omni-batch-processed-py/-/tree/master/data/omni_batch_processed_py"
     }
-
+}
+ 
