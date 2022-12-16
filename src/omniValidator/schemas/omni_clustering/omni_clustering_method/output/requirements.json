@@ -8,10 +8,11 @@
     },
     "inputs":{
         "keywords": "omni_clustering_filter", 
-        "files":  ["filtered_logcounts", "meta_file"], 
+        "files":  ["filtered_logcounts", "meta_file", "filtered_counts"], 
         "prefix":{
             "filtered_logcounts": "_logcounts", 
-            "meta_file": "__metameta" 
+            "meta_file": "_meta", 
+            "filtered_counts": "_counts"
         }
     },
     "outputs_files": {
