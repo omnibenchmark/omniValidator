@@ -1,6 +1,6 @@
 # omniValidator
 
-Python module to check files in an Omnibenchmark project. 
+`omniValidator` is a python module to control file requirements in an Omnibenchmark project. 
 
 ## Usage
 
@@ -8,7 +8,7 @@ The following sections assume that your working directory is an Omnibenchmark pr
 
 You can check [here](https://github.com/ansonrel/omniValidator/tree/main/src/omniValidator/schemas) if the Omnibenchmark you are working on has available validators. 
 
-If you are working with an `omnibenchmark` object, `omniValidator.validate_requirements` can be used without other specifications. 
+If you are working with an `Omnibenchmark` object, the main function (`omniValidator.validate_requirements`) can be used without other specifications. 
 
 ### Display the requirements
 
@@ -31,11 +31,11 @@ which will render an html table of the requirements needed for the Omnibenchmark
 
 ### Validate required files and JSON files
 
-The `validate_all` function of `omniValidator` shows you how to check: 
+The `validate_all` function of `omniValidator` shows you how to check for: 
 
-- That all output files needed for the downstream modules were correctly generated and named
+- output files needed for the downstream modules and if they are correctly generated and named
 
-- that the JSON files that you created are correctly formated and contain the required fields
+- JSON files that you created and if they are correctly formatted (ie, contain the required fields for downstream projects)
 
 ```
 import omniValidator as ov
@@ -87,11 +87,11 @@ ov.validate_requirements(
 )
 ```
 
-Validation requirements can be accessed on the [official repo of the module](https://github.com/ansonrel/omniValidator/tree/main/src/omniValidator/schemas). 
+Validation requirements can be accessed on the [official repo of the module](https://github.com/omnibenchmark/omniValidator/tree/main/src/omniValidator/schemas). 
 
 ### Validate JSON files only
 
-JSON files contain metadata and are used in most Omnibenchmark projects. The output JSON files of a project can be validated as follows: 
+JSON files contain metadata and are used in most Omnibenchmark projects. The content and structure of JSON files  can be validated as follows: 
 
 
 ```
@@ -112,7 +112,7 @@ ov.validate_json_file(
 
 Which returns a boolean (`True`) if your JSON is valid. 
 
-## Contribute
+## How to modify requirements
 
 You can modify existing requirements/ JSON schemas or add new ones using pull requests or by opening an issue on the Github page of the module. 
 
