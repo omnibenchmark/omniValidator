@@ -58,11 +58,11 @@ The fields described below are specified in any `requirements.json` file and dir
 
 Values in the `outputs_files` fields are expected to be present in the `omni_object` or output files. For an `omni_object`, the values in `omni_obj.outputs.file_mapping` are checked. These values should also be mappable in the name of the output files (e.g. `counts` files should produce files of format `[PREFIX]_counts.[END]). 
 
-#### a. ...`end`
+#### 1. ...`end`
 
 The extension of each `outputs_files` files is expected to have an `end` extension. The validator will check for these file extensions. 
 
-#### b. (optional) ...`substitutable_with`
+#### 2. (optional) ...`substitutable_with`
 
 Some outputs can be substitutable, meaning that different outputs can be interchangeable if one of them is missing. The substitute to any field can be defined with an extra field of form: 
 
@@ -79,4 +79,4 @@ Some outputs can be substitutable, meaning that different outputs can be interch
 
 ```
 
-in the above example, `outputA` may be absent from the `omniobject` or the output files if `outputB` is defined.
+in the above example, `outputA` may be absent from the `omni_object` or the output files if `outputB` is defined.
