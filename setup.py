@@ -60,7 +60,7 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/guides/single-sourcing-package-version/
-    version="0.0.13",  # Required
+    version="0.0.14",  # Required
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
@@ -89,7 +89,7 @@ setup(
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-    url="https://github.com/ansonrel/omniValidator",  # Optional
+    url="https://github.com/omnibenchmark/omniValidator",  # Optional
     # This should be your name or the name of the organization which owns the
     # project.
     author="A. Sonrel",  # Optional
