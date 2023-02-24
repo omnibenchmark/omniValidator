@@ -4,11 +4,11 @@
 
 ## Usage
 
-The following sections assume that your working directory is an Omnibenchmark project associated to an **existing** Omnibenchmark and stage (data, method, metric, etc.).
+The following sections assume that your working directory is an Omnibenchmark project associated to an **existing** Omnibenchmark.
 
 You can check [here](https://github.com/ansonrel/omniValidator/tree/main/src/omniValidator/schemas) if the Omnibenchmark you are working on has available validators. 
 
-If you are working with an `Omnibenchmark` object, the main function (`omniValidator.validate_requirements`) can be used without other specifications. 
+If you are working with an `Omnibenchmark` object, the main function (`omniValidator.validate_requirements`) can be used directly on this object without other specifications. 
 
 ### Display the requirements
 
