@@ -3,12 +3,12 @@ import os as os
 from jsonschema import validate
 import jsonref
 import jsonschema # <--
-#import logging
 from os.path import dirname
 import re
 import warnings
 from json2table import convert
 from IPython.core.display import display, HTML
+from omniValidator.utils import get_avail_keywords, get_avail_benchmarks, schema_exist
 
 
 
@@ -112,6 +112,9 @@ def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_fold
     if data_folder is not None and omni_obj is not None: 
         msg = "both `data_folder` and `omni_obj` are provided but only 1 required. Only `omni_obj` will be used."
         warnings.warn(msg)
+    if data_folder is None and omni_obj is None: 
+        msg = "An omni_obj or a data folder have to be specified to be validated."
+        raise Exception(msg)
     if omni_obj is not None: 
         if keyword is not None:
             msg = "both `omni_obj` and `keyword` are provided. Using `keyword` argument only."
@@ -127,6 +130,9 @@ def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_fold
             warnings.warn(msg)
         else: 
             benchmark = omni_obj.benchmark_name        
+
+    ## Checks validity of benchmark and keyword
+    schema_exist(benchmark, keyword)
 
     ## Loads requir file
     requir = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, 'output',  'requirements.json')
