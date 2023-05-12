@@ -2,7 +2,7 @@ import json
 import os as os
 from jsonschema import validate
 import jsonref
-import jsonschema # <--
+import jsonschema 
 from os.path import dirname
 import re
 import warnings

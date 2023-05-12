@@ -14,6 +14,7 @@ def get_avail_keywords(benchmark=None):
     """
     Lists available keywords in omniValidator for a given benchmark.
     """
+    from omniValidator import __path__ as omni_val_path 
     if benchmark is None: 
             msg = "benchmark has to be specified"
             raise Exception(msg)
