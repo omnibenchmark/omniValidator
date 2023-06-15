@@ -2,3 +2,4 @@
 jsonref>=1.0.1
 jsonschema>=4.17.3
 json2table>=1.1.5 
+requests

@@ -9,8 +9,8 @@ import warnings
 from json2table import convert
 from IPython.core.display import display, HTML
 from omniValidator.utils import get_avail_keywords, get_avail_benchmarks, schema_exist
-
-
+from urllib.parse import urlparse
+import requests
 
 class ValidationError(Exception):
      def __init__(self, value):
@@ -19,6 +19,13 @@ class ValidationError(Exception):
          return repr(self.value)
 
 
+def is_url(string):
+    try:
+        result = urlparse(string)
+        return all([result.scheme, result.netloc])
+    except ValueError:
+        return False
+    
 def read_json_file(file_path):
     """
     Reads the file at the file_path and returns the contents.
@@ -26,26 +33,33 @@ def read_json_file(file_path):
             json_content: Contents of the json file
 
     """
-    try:
-        json_content_file = open(file_path, 'r')
-    except IOError as error:
-        print(error)
-
-    else:
+    if is_url(file_path): 
         try:
-            base_path = dirname(file_path)
-            base_uri = 'file://{}/'.format(base_path)
-            json_schema = jsonref.load(json_content_file, base_uri=base_uri, jsonschema=True)
-        except (ValueError, KeyError) as error:
-            print(file_path)
+            response = requests.get(file_path)
+            json_schema = response.json()
+        except IOError as error:
+            print(error)
+    else: 
+        try:
+            json_content_file = open(file_path, 'r')
+        except IOError as error:
             print(error)
 
-        json_content_file.close()
+        else:
+            try:
+                base_path = dirname(file_path)
+                base_uri = 'file://{}/'.format(base_path)
+                json_schema = jsonref.load(json_content_file, base_uri=base_uri, jsonschema=True)
+            except (ValueError, KeyError) as error:
+                print(file_path)
+                print(error)
+
+            json_content_file.close()
 
     return json_schema
 
 
-def get_schema(benchmark, keyword, ftype): 
+def get_schema(benchmark, keyword, ftype, github = True): 
     """
     Returns the schema file path. Schemas are stored in the `schemas` folder of the package. 
 
@@ -53,9 +67,13 @@ def get_schema(benchmark, keyword, ftype):
         benchmark: omnibenchmark name. 
         keyword: keyword associated to the project (i.e., keyword specific to 'data', 'method', etc)
         ftype: file type name. 
+        github: boolean, whether to fetch the content from github. 
     """
-    from omniValidator import __path__ as omni_val_path     
-    schema_path = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, ftype+'.json')
+    if github == True: 
+        schema_path = os.path.join('https://raw.githubusercontent.com/omnibenchmark/omni_essentials/main/', 'schemas', benchmark, keyword, ftype+'.json')
+    else: 
+        from omniValidator import __path__ as omni_val_path     
+        schema_path = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, ftype+'.json')
     return(schema_path)
 
 
