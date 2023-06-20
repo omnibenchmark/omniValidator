@@ -1,0 +1,20 @@
+---
+data:
+    name: "csf_patient_py"
+    title: "csf_patients single cell dataset"
+    description: "Single cell transcriptome dataset from cerebrosal spine fluid (CSF) of two different patients"
+    keywords: ["omni_batch_data"]
+script: "src/csf_patient.R"
+outputs:
+    template: "data/${name}/${name}_${out_name}.${out_end}"
+    files:
+        counts: 
+            end: "mtx.gz"
+        data_info:
+            end: "json"
+        meta:
+            end: "json"
+        feature:
+            end: "json"
+benchmark_name: "omni_batch_py"
+    

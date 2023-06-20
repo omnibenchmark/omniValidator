@@ -3,3 +3,5 @@ jsonref>=1.0.1
 jsonschema>=4.17.3
 json2table>=1.1.5 
 requests
+renku>=2.5.0
+omnibenchmark>=0.0.44

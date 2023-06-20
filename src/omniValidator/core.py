@@ -12,6 +12,9 @@ from omniValidator.utils import get_avail_keywords, get_avail_benchmarks, schema
 from urllib.parse import urlparse
 import requests
 
+# Global variables for github links
+raw_github = 'https://raw.githubusercontent.com/omnibenchmark/omni_essentials/main/'
+
 class ValidationError(Exception):
      def __init__(self, value):
          self.value = value
@@ -70,7 +73,7 @@ def get_schema(benchmark, keyword, ftype, github = True):
         github: boolean, whether to fetch the content from github. 
     """
     if github == True: 
-        schema_path = os.path.join('https://raw.githubusercontent.com/omnibenchmark/omni_essentials/main/', 'schemas', benchmark, keyword, ftype+'.json')
+        schema_path = os.path.join(raw_github, 'schemas', benchmark, keyword, ftype+'.json')
     else: 
         from omniValidator import __path__ as omni_val_path     
         schema_path = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, ftype+'.json')
@@ -120,7 +123,6 @@ def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_fold
 
 
     """
-    from omniValidator import __path__ as omni_val_path   
 
      # args requirements
     if omni_obj is None:
@@ -153,9 +155,7 @@ def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_fold
     schema_exist(benchmark, keyword)
 
     ## Loads requir file
-    requir = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, 'output',  'requirements.json')
-    f = open(requir)
-    requir = json.load(f)
+    requir = read_json_file(os.path.join(raw_github, 'schemas', benchmark, keyword, 'output/requirements.json'))
 
     ## Parse requirements into regex
     requir_names = list(requir['outputs_files'].keys())
@@ -206,6 +206,8 @@ def validate_requirements(omni_obj=None, benchmark=None, keyword=None, data_fold
             msg = "Multiple files associated to "+ regx[i] +":\n"+str(files_found[i])
             warnings.warn(msg)
     print("\nValidated! All outputs meet the requirements of '", keyword, "'\n")
+    if omni_obj is not None: 
+        print("You can now run the workflow for this omni object.")
     return True
 
 
@@ -233,9 +235,7 @@ def validate_all(benchmark, keyword, data_folder):
         warnings.warn(msg)
         
     ## Loads requir file
-    requir = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, 'output',  'requirements.json')
-    f = open(requir)
-    requir = json.load(f)
+    requir = read_json_file(os.path.join(raw_github, 'schemas', benchmark, keyword, 'output/requirements.json'))
 
     ## Parse requirements into regex
     requir_names = list(requir['outputs_files'].keys())
@@ -319,7 +319,7 @@ def validate_all(benchmark, keyword, data_folder):
     return True
 
 
-def display_requirements(omni_obj=None, benchmark=None, keyword=None):
+def display_requirements(omni_obj=None, benchmark=None, keyword=None, raw_html = False):
     """
     Displays the requirements of an Omnibenchmark's module, fetched from https://github.com/ansonrel/omniValidator/tree/main/src/omniValidator/schemas.
 
@@ -329,6 +329,7 @@ def display_requirements(omni_obj=None, benchmark=None, keyword=None):
         omni_obj (omniObject): omni object from the omnibenchmark module
         benchmark (str):  benchmark name
         keyword (str): keyword that defines the current step of the benchmark 
+        raw_html (bool): return the html object. 
 
     Returns: 
         A parsed table of the requirements in an `IPython.core.display.HTML` object.
@@ -352,11 +353,13 @@ def display_requirements(omni_obj=None, benchmark=None, keyword=None):
             benchmark = omni_obj.benchmark_name        
 
     ## Loads requir file
-    requir = os.path.join(omni_val_path[0], 'schemas', benchmark, keyword, 'output',  'requirements.json')
-    f = open(requir)
-    requir = json.load(f)
+    requir = read_json_file(os.path.join(raw_github, 'schemas', benchmark, keyword, 'output/requirements.json'))
+
     build_direction = "LEFT_TO_RIGHT"
     table_attributes = {"style" : "width:100%"}
     html = convert(requir, build_direction=build_direction, table_attributes=table_attributes)
-    display(HTML(html))
+    if raw_html: 
+        return(html)
+    else: 
+        display(HTML(html))
 
