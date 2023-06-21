@@ -3,5 +3,6 @@ jsonref>=1.0.1
 jsonschema>=4.17.3
 json2table>=1.1.5 
 requests
+pyOpenSSL>=22.1.0
 renku>=2.4.1
 omnibenchmark>=0.0.44

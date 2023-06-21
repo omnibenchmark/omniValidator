@@ -56,3 +56,4 @@ PERSO_README
 nb_testing/schema_test.ipynb
 env/*
 src/omniValidator/__pycache__
+testenv/*
